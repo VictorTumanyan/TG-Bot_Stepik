@@ -2,12 +2,12 @@
 # chat_id= 6325704944
 
 
-import requests # type:ignore
+import requests
 import time
 
 API_URL = 'http://api.telegram.org/bot'
-API_CATS_URL = 'https://api.thecatapi.com/v1/images/search'
 BOT_TOKEN = '6737278711:AAEd7eFofaoj5n5n69lqBvb71RrghrS-xkE'
+API_CATS_URL = 'https://api.thecatapi.com/v1/images/search'
 GOAR_LIST = ['Малявка, это ты?)', 'А вот это?', 'Ну тут по-любому ты', 'Ладно, вот ты ахах']
 ERROR_TEXT = 'Здесь должна быть картинка с котиком :('
 TEXT = 'Опачки! Апдейтик'
