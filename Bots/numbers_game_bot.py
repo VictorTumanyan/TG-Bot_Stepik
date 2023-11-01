@@ -153,6 +153,10 @@ async def send_number(message: Message):
             f'Давай сначала напиши слово "Погнали", потом уже будешь угадывать, эли'
         )
 
+# @dp.message(IsAdmin(admin_ids))
+# async def answer_if_admins_update(message: Message):
+#     await message.answer(text='Вы админ')
+
 @dp.my_chat_member(ChatMemberUpdatedFilter(member_status_changed=KICKED))
 async def process_user_blocked_bot(event: ChatMemberUpdated):
     print(f'Пользователь {event.from_user.id} заблокировал бота')
