@@ -1,8 +1,9 @@
 import random
+from typing import Any
 
 from aiogram import Bot, Dispatcher, F
-from aiogram.types import Message
-from aiogram.filters import Command, CommandStart
+from aiogram.types import Message, ChatMemberUpdated
+from aiogram.filters import Command, CommandStart, ChatMemberUpdatedFilter, KICKED, BaseFilter
 
 BOT_TOKEN = '6737278711:AAEd7eFofaoj5n5n69lqBvb71RrghrS-xkE'
 ATTEMPTS = 5
@@ -15,12 +16,21 @@ USER_PATTERN = {
     'wins': 0
 }
 
-users = {}
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
+users = {}
+admin_ids: list[int] = [6325704944]
+
 def get_random_number() -> int:
     return random.randint(1, 100)
+
+class IsAdmin(BaseFilter):
+    def __init__(self, admin_ids: list[int]) -> None:
+        self.admin_ids = admin_ids
+
+    async def __call__(self, message: Message) -> bool:
+        return message.from_user.id in self.admin_ids
 
 @dp.message(CommandStart())
 async def process_start_command(message: Message):
@@ -143,6 +153,10 @@ async def send_number(message: Message):
             f'Давай сначала напиши слово "Погнали", потом уже будешь угадывать, эли'
         )
 
+@dp.my_chat_member(ChatMemberUpdatedFilter(member_status_changed=KICKED))
+async def process_user_blocked_bot(event: ChatMemberUpdated):
+    print(f'Пользователь {event.from_user.id} заблокировал бота')
+
 @dp.message()
 async def any_message(message: Message):
     if users[message.from_user.id]['in_game']:
@@ -152,7 +166,6 @@ async def any_message(message: Message):
             f'Я не знаю, как реагировать на твоё сообщение.\n'
             f'Попробуй почитать правила, отправив команду /help или сразу начни играть, отправив слово "Поехали"'
         )
-
 
 if __name__ == "__main__":
     dp.run_polling(bot)
