@@ -2,3 +2,4 @@ venv/
 .vscode/
 example.py
 .env
+__pycache__
