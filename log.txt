@@ -1,0 +1,2 @@
+[2024-02-18 09:43:54,072] #WARNING  study_logging.py:37 - __main__ - Это лог уровня WARNING
+[2024-02-18 09:45:01,275] #WARNING  study_logging.py:37 - __main__ - This is the log which type is WARNING
